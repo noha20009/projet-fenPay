@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Statistique {
 
@@ -7,6 +7,7 @@ public class Statistique {
     private int nombrePaiements;
     private int facturePaye;
     private int factureNonPaye;
+    private LocalDate dateGeneration;
 
     public Statistique() {
         this.totalPaiements = 0;
@@ -14,37 +15,23 @@ public class Statistique {
         this.nombrePaiements = 0;
         this.facturePaye = 0;
         this.factureNonPaye = 0;
+        this.dateGeneration = LocalDate.now();
     }
 
-
-    public double getTotalPaiements() {
-        return totalPaiements;
-    }
-
-    public double getTotalCommissions() {
-        return totalCommissions;
-    }
-
-    public int getNombrePaiements() {
-        return nombrePaiements;
-    }
-
-    public int getFacturePaye() {
-        return facturePaye;
-    }
+    public double getTotalPaiements() { return totalPaiements; }
+    public double getTotalCommissions() { return totalCommissions; }
+    public int getNombrePaiements() { return nombrePaiements; }
+    public int getFacturePaye() { return facturePaye; }
+    public int getFactureNonPaye() { return factureNonPaye; }
+    public LocalDate getDateGeneration() { return dateGeneration; }
 
     public void setFacturePaye(int facturePaye) {
         this.facturePaye = facturePaye;
     }
 
-    public int getFactureNonPaye() {
-        return factureNonPaye;
-    }
-
     public void setFactureNonPaye(int factureNonPaye) {
         this.factureNonPaye = factureNonPaye;
     }
-
 
     public void calculerTotalPaiements(double montant) {
         this.totalPaiements += montant;
@@ -64,4 +51,3 @@ public class Statistique {
         System.out.println("Factures Non Payées : " + factureNonPaye);
     }
 }
-

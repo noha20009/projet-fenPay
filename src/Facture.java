@@ -29,6 +29,14 @@ public class Facture {
         return date;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public Prestataire getPrestataire() {
+        return prestataire;
+    }
+
     public boolean isStatus() {
             return status;
         }
