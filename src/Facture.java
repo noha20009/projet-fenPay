@@ -25,7 +25,11 @@ public class Facture {
             return montant;
         }
 
-        public boolean isStatus() {
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public boolean isStatus() {
             return status;
         }
 

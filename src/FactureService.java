@@ -36,7 +36,11 @@ public class FactureService {
         }
         return null;
     }
-    public 
+    public Facture filterFacture(int id){
+        List<Facture> listfactureFiltrer = factures.stream().filter(f->f.getId()==id).toList();
+        listfactureFiltrer.forEach(System.out::println);
+        return null;
+    }
 
     }
 
