@@ -74,7 +74,7 @@ public class Paiementdb {
 
                 double restant = montantFacture - totalPaye;
 
-                // ✅ AFFICHAGE AVANT DEMANDE
+                //  AFFICHAGE AVANT DEMANDE
                 System.out.println("Montant facture : " + montantFacture);
                 System.out.println("Total déjà payé : " + totalPaye);
                 System.out.println("Montant restant : " + restant);
