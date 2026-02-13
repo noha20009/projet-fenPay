@@ -227,7 +227,7 @@ public class Client {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
-            System.out.println("📋 Liste des clients :");
+            System.out.println(" Liste des clients :");
 
             boolean found = false;
 
@@ -273,10 +273,10 @@ public class Client {
                         rs.getString("email")
                 );
 
-                System.out.println("✅ Client trouvé : " + c.getNom());
+                System.out.println(" Client trouvé : " + c.getNom());
                 return c;
             } else {
-                System.out.println("❌ Client non trouvé");
+                System.out.println(" Client non trouvé");
             }
 
         } catch (Exception e) {
