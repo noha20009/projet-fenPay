@@ -140,14 +140,11 @@ public class Main {
 
                 System.out.println("Montant paiement:");
                 double montant = Double.parseDouble(scanner.nextLine());
-
-                System.out.println("Commission:");
-                double commission = Double.parseDouble(scanner.nextLine());
-
+              
                 System.out.println("Facture payée (true/false):");
                 boolean paye = Boolean.parseBoolean(scanner.nextLine());
 
-                statistiqueService.ajouterPaiement(montant, commission, paye);
+                statistiqueService.ajouterPaiement(montant, 2, paye);
             }
 
             else if (choix.equals("2")) {
