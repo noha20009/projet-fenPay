@@ -32,7 +32,7 @@ public class PaiementDAO{
             ps2.executeUpdate();
 
 
-            System.out.println("✅ Payment and Commission inserted successfully!");
+            System.out.println("Payment and Commission inserted successfully");
             System.out.println("Payment ID: " + paymentId + ", Amount: " + montantPaiement);
             System.out.println("Commission Amount (2%): " + montantCommission);
 
