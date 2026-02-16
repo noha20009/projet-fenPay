@@ -213,10 +213,4 @@ if(prestatTrouver==null) {
 
     }
 
-
-
-
-
-
-
 }

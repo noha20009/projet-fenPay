@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Scanner;
 
 public class Facture {
         private int id;
@@ -52,6 +54,7 @@ public class Facture {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
 }
 
 
