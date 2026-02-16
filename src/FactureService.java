@@ -39,7 +39,7 @@ import java.sql.*;
             }
         }
 
-        //  Lister toutes les factures 
+        //  Lister toutes les factures
         public List<Facture> lister() {
 
             List<Facture> factures = new ArrayList<>();
@@ -126,8 +126,6 @@ import java.sql.*;
 
             return null;
         }
-
-
     }
 
 
