@@ -48,22 +48,30 @@ public class MenuFS {
             choix = scanner.nextLine();
 
             switch (choix) {
-
-                case "1":
+                    case "1":
                     System.out.println("Montant:");
                     double montant = Double.parseDouble(scanner.nextLine());
+
+                    System.out.println("ID Client:");
+                    int idClient = Integer.parseInt(scanner.nextLine());
+
+
+                    Client client = new Client(idClient,"", "", "");
+                    Prestataire prestataire = new Prestataire( "", "");
 
                     Facture facture = new Facture(
                             0,
                             LocalDate.now(),
                             montant,
                             false,
-                            null,
-                            null
+                            client,
+                            prestataire
                     );
 
                     factureService.creerFacture(facture);
                     break;
+                    
+
 
                 case "2":
                     System.out.println("ID facture:");
@@ -126,13 +134,12 @@ public class MenuFS {
                     System.out.println("Montant paiement:");
                     double montant = Double.parseDouble(scanner.nextLine());
 
-                    System.out.println("Commission:");
-                    double commission = Double.parseDouble(scanner.nextLine());
-
                     System.out.println("Facture payée (true/false):");
                     boolean paye = Boolean.parseBoolean(scanner.nextLine());
+                    System.out.println("idfacture");
+                    int idfacture = scanner.nextInt();
 
-                    statistiqueService.ajouterPaiement(montant, commission, paye);
+                    statistiqueService.ajouterPaiement(montant, paye, idfacture);
                     break;
 
                 case "2":
