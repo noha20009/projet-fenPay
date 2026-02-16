@@ -20,8 +20,8 @@ import java.sql.*;
                 stmt.setDate(1, Date.valueOf(facture.getDate()));
                 stmt.setDouble(2, facture.getMontant());
                 stmt.setBoolean(3, facture.isStatus());
-                stmt.setInt(4, facture.getClient().getId());
-                stmt.setInt(5, facture.getPrestataire().getId());
+                stmt.setInt(4, facture.getClient().getIdClient());
+                stmt.setInt(5, facture.getPrestataire().getIdPrestat());
 
                 stmt.executeUpdate();
 
@@ -39,7 +39,7 @@ import java.sql.*;
             }
         }
 
-        //  Lister toutes les factures
+        //  Lister toutes les factures 
         public List<Facture> lister() {
 
             List<Facture> factures = new ArrayList<>();
@@ -126,6 +126,8 @@ import java.sql.*;
 
             return null;
         }
+
+
     }
 
 

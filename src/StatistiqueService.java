@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class StatistiqueService {
 
@@ -85,4 +86,6 @@ public void ajouterPaiement(double montant, double tauxCommission, boolean paye)
     public Statistique getStatistique() {
         return statistique;
     }
+
+
 }
