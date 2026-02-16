@@ -14,7 +14,7 @@ import java.sql.*;
 
             String sql = "INSERT INTO facture (date, montant, status, idClient, idPrestataire) VALUES (?, ?, ?, ?, ?)";
 
-            try (Connection conn = DatabaseConnection.getConnection();
+            try (Connection conn = DBConnection.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
                 stmt.setDate(1, Date.valueOf(facture.getDate()));
@@ -45,7 +45,7 @@ import java.sql.*;
             List<Facture> factures = new ArrayList<>();
             String sql = "SELECT * FROM facture";
 
-            try (Connection conn = DatabaseConnection.getConnection();
+            try (Connection conn = DBConnection.getConnection();
                  Statement stmt = conn.createStatement();
                  ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -75,7 +75,7 @@ import java.sql.*;
 
             String sql = "UPDATE facture SET montant = ?, status = ? WHERE id = ? AND status = false";
 
-            try (Connection conn = DatabaseConnection.getConnection();
+            try (Connection conn = DBConnection.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                 stmt.setDouble(1, nouveauMontant);
@@ -103,7 +103,7 @@ import java.sql.*;
 
             String sql = "SELECT * FROM facture WHERE id = ?";
 
-            try (Connection conn = DatabaseConnection.getConnection();
+            try (Connection conn = DBConnection.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                 stmt.setInt(1, id);

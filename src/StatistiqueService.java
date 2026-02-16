@@ -10,51 +10,69 @@ public class StatistiqueService {
         this.statistique = new Statistique();
     }
 
+public void ajouterPaiement(double montant, boolean status, int idFacture) {
 
-public void ajouterPaiement(double montant, double tauxCommission, boolean paye) {
+        String sqlPaiement = "INSERT INTO Paiement (montant, date, idFacture) VALUES (?, ?, ?)";
+        String sqlCommission = "INSERT INTO Commission (idPaiement, tauxCommission, montant) VALUES (?, ?, ?)";
+        String sqlUpdateFacture = "UPDATE Facture SET status = ? WHERE id = ?";
 
-    String sqlPaiement = "INSERT INTO Paiement (montant, date, idFacture) VALUES (?, ?, ?)";
-    String sqlCommission = "INSERT INTO Commission (idPaiement, tauxCommission, montant) VALUES (?, ?, ?)";
 
-    try (Connection conn = DatabaseConnection.getConnection()) {
+        try (Connection conn = DBConnection.getConnection()) {
 
-        conn.setAutoCommit(false);
+            conn.setAutoCommit(false);
 
-        // insert Paiement
-        PreparedStatement stmtPaiement = conn.prepareStatement(sqlPaiement, Statement.RETURN_GENERATED_KEYS);
-        stmtPaiement.setDouble(1, montant);
-        stmtPaiement.setDate(2, Date.valueOf(LocalDate.now()));
-        stmtPaiement.setInt(3, 1);
+            // Vérifier que la facture existe
+            PreparedStatement check = conn.prepareStatement("SELECT id FROM Facture WHERE id = ?");
+            check.setInt(1, idFacture);
+            ResultSet rsCheck = check.executeQuery();
 
-        stmtPaiement.executeUpdate();
+            if (!rsCheck.next()) {
+                System.out.println(" Facture inexistante !");
+                conn.rollback();
+                return;
+            }
 
-        ResultSet rs = stmtPaiement.getGeneratedKeys();
-        int idPaiement = 0;
-        if (rs.next()) {
-            idPaiement = rs.getInt(1);
+            // Insertion Paiement
+            PreparedStatement stmtPaiement =
+                    conn.prepareStatement(sqlPaiement, Statement.RETURN_GENERATED_KEYS);
+
+            stmtPaiement.setDouble(1, montant);
+            stmtPaiement.setDate(2, Date.valueOf(LocalDate.now()));
+            stmtPaiement.setInt(3, idFacture);
+
+            stmtPaiement.executeUpdate();
+
+            ResultSet rs = stmtPaiement.getGeneratedKeys();
+            int idPaiement = 0;
+            if (rs.next()) {
+                idPaiement = rs.getInt(1);
+            }
+
+            //  Commission automatique
+            double tauxCommission = 2.0;  // Automatique
+            double montantCommission = montant * tauxCommission / 100;
+
+            PreparedStatement stmtCommission = conn.prepareStatement(sqlCommission);
+            stmtCommission.setInt(1, idPaiement);
+            stmtCommission.setDouble(2, tauxCommission);
+            stmtCommission.setDouble(3, montantCommission);
+            stmtCommission.executeUpdate();
+
+            //  Mise à jour facture
+            PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdateFacture);
+            stmtUpdate.setBoolean(1, status);
+            stmtUpdate.setInt(2, idFacture);
+            stmtUpdate.executeUpdate();
+
+            conn.commit();
+
+            System.out.println("Paiement ajouté !");
+            System.out.println("Commission automatique (2%) : " + montantCommission);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-
-        double montantCommission = montant * 2 / 100;
-
-
-        PreparedStatement stmtCommission = conn.prepareStatement(sqlCommission);
-        stmtCommission.setInt(1, idPaiement);
-        stmtCommission.setDouble(2, 2);
-        stmtCommission.setDouble(3, montantCommission);
-
-        stmtCommission.executeUpdate();
-
-        conn.commit();
-
-        System.out.println("Paiement ajouté avec commission automatique !");
-        System.out.println("Commission calculée: " + montantCommission);
-
-    } catch (SQLException e) {
-        e.printStackTrace();
     }
-}
-
 
     public void afficherRapport() {
         statistique.genererRapport();
@@ -65,7 +83,7 @@ public void ajouterPaiement(double montant, double tauxCommission, boolean paye)
 
         String sql = "INSERT INTO Statistique (totalPaiements, totalCommissions, nombrePaiements, nombreFacturePayee, nombreFactureNonPayee, dateGeneration) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setDouble(1, statistique.getTotalPaiements());
