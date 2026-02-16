@@ -83,7 +83,7 @@ public void ajouterPaiement(double montant, boolean status, int idFacture) {
 
         String sql = "INSERT INTO Statistique (totalPaiements, totalCommissions, nombrePaiements, nombreFacturePayee, nombreFactureNonPayee, dateGeneration) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setDouble(1, statistique.getTotalPaiements());
